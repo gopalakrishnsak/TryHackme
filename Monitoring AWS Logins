@@ -6,9 +6,71 @@ Task 2 IAM and User Credentials
  
 
 Task 3 Monitoring Console Logins
+    
+   > How many times did Thomas fail to log in to the AWS console?
+    
+       New Search in Splunk
+
+       .index=task3 eventName=ConsoleLogin errorMessage=Fail*
+		
+            All time (select this )(default is 24 Hours so change it to All Time) 
+	
+  OUTPUT: Complete 11 events (before 3/10/26 7:59:10.000 AM)
+                Events (11)
+
+  > Which other user logged in to the AWS console without MFA?
+
+                 New Search
+                  .index=task3 eventName=ConsoleLogin additionalEventData.MFAUsed=No
+		
+                All time
+     OUTPUT: Complete 14 events 
+
+     {"eventVersion": "1.11", "userIdentity": {"type": "IAMUser", "principalId": "AIDAVZZK4G6E4OC6R5VE4", "accountId": "398985017225", "accessKeyId": "", "userName": "thomas.bennett"}                
+     {"eventVersion": "1.11", "userIdentity": {"type": "IAMUser", "principalId": "AIDAVZZK4G6EYIICHBXGK", "accountId": "398985017225", "accessKeyId": "", "userName": "otake.nao"}
 
 
 Task 4 Monitoring Access Keys
+
+> What access key ID of Michael was used in the attack?
+  .index=task4 userIdentity.userName="michael.turner"
+
+OUTPUT: {"eventVersion": "1.11", "userIdentity": {"type": "IAMUser", "principalId": "AIDAVZZK4G6E5AAVQLL37", "arn": "arn:aws:iam::398985017225:user/michael.turner", "accountId": "398985017225", "accessKeyId": "AKIAVZZK4G6EW3NCJENS", "userName": "michael.turner"}
+
+> What is the name of the S3 bucket accessed by the attackers?
+  .index=task4 userIdentity.accessKeyId=AKIAVZZK4G6EW3NCJENS
+
+OUTPUT: {"list-type": "2", "bucketName": "ocr-passport-scan", "encoding-type": "url", "prefix": "", "delimiter": "/", "Host": "ocr-passport-scan.s3.eu-central-1.amazonaws.com"}
+
+> How many files were exfiltrated and deleted by the adversary?
+     .index=task4 eventName=DeleteObject
+
+OUTPUT: 26 events (before 3/10/26 8:29:12.000 AM)
+
+> Which file was uploaded to the bucket at the end of the attack?
+     .index=task4 eventName=PutObject
+
+OUTPUT:{"type": "AWS::S3::Object", "ARN": "arn:aws:s3:::ocr-passport-scan/WHERE-ARE-MY-FILES.README"}]
+
+> Which AWS service was used most by the user who did not use access keys?
+Answer Example: Amazon Redshift
+   .index=task4 NOT userIdentity.accessKeyId=AKIA* | stats count by eventSource
+
+OUTPUT:
+     agreement-marketplace.amazonaws.com	1
+     bedrock.amazonaws.com	70
+     ce.amazonaws.com	3
+     cost-optimization-hub.amazonaws.com	1
+     ec2.amazonaws.com	2
+     freetier.amazonaws.com	3
+     health.amazonaws.com	6
+     iam.amazonaws.com	1
+     license-manager.amazonaws.com	1
+     notifications.amazonaws.com	6
+     s3.amazonaws.com	1
+     servicecatalog-appregistry.amazonaws.com	1
+     signin.amazonaws.com	1
+     uxc.amazonaws.com	3
 
 
 Task 5 Detecting IAM Role Abuse
@@ -18,3 +80,4 @@ Task 6 Detecting IAM Changes
 
 
 Task 7 Conclusion
+   NO AnswerNeeded
