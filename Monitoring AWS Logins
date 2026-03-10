@@ -74,10 +74,30 @@ OUTPUT:
 
 
 Task 5 Detecting IAM Role Abuse
+   >Which EC2 instance ID used the UserAvatarsProcessor role?
+      .index=task5 "UserAvatarsProcessor
+       OUTPUT:{"type": "AssumedRole", "principalId": "AROAVZZK4G6ERIIVB7K4M:i-0d2b8acdedc371589", "arn": "arn:aws:sts::398985017225:assumed-role/UserAvatarsProcessor/i-0d2b8acdedc371589", 
+   
+   >Someone assumed the EU-RemoteSupport IAM role.How did they name the role session?
+    .index=task5 eventName=AssumeRole requestParameters.roleArn="*EU-RemoteSupport*"
 
+     OUTPUT:{"roleArn": "arn:aws:iam::398985017225:role/EU-RemoteSupport", "roleSessionName": "SecretSession"},
+
+   >Which user assumed the IAM role from the question above?
+    Hint:Only AssumeRole will show you the user behind the role session.
+
+OUTPUT:{"type": "IAMUser", "principalId": "AIDAZPG23OBQ1ADDQLMB9", "arn": "arn:aws:iam::398985017225:user/sarah.braun", "accountId": "398985017225", "accessKeyId": "AKIAVZZK4G6EXJOUF6XH", "userName": "sarah.braun"}
 
 Task 6 Detecting IAM Changes
+>Under which ARN does the Splunk integration authenticate? SOC Note: This is an exceptionally insecure configuration!
+  .index=task6 eventName=CreateAccessKey
 
+OUTPUT: {"type": "Root", "principalId": "398985017225", "arn": "arn:aws:iam::398985017225:root", "accountId": "398985017225"
+
+>When was the over-privileged integration access key created? Answer Example: 2025-12-25 15:30:45
+  .index=task6 eventName=CreateAccessKey
+
+OUTPUT:{"accessKeyId": "AKIAVZZK4G6EQBG7R77Y", "status": "Active", "createDate": "Dec 29, 2025, 7:59:23\u202fPM"}}
 
 Task 7 Conclusion
    NO AnswerNeeded
