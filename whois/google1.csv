@@ -1,0 +1,2 @@
+domain,expiration_date,name_servers,creation_date,registrar,domain_name,updated_date,status
+google.com,2028-09-14T04:00:00Z,"['ns1.google.com', 'ns2.google.com', 'ns3.google.com', 'ns4.google.com']",1997-09-15T04:00:00Z,MarkMonitor Inc.,GOOGLE.COM,2019-09-09T15:39:04Z,serverUpdateProhibited https://icann.org/epp#serverUpdateProhibited
