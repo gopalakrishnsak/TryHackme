@@ -448,4 +448,4 @@ Review the vulnerabilities and their descriptions.
 
 ---
 
-*Writeup by Junny | TryHackMe | Room: Defender for Cloud: CSPM*
+* TryHackMe | Room: Defender for Cloud: CSPM*
