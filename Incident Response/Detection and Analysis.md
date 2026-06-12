@@ -553,4 +553,3 @@ This finding directly feeds into the Response and Recovery phase (Room 3), where
 
 ---
 
-*Writeup by [your GitHub handle] | TryHackMe Incident Response Module | Room 2 of 4*
