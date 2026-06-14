@@ -47,8 +47,6 @@
 
 ## Task 1 — Introduction
 
-**Answer:** `I am ready to start!`
-
 **Context:**
 
 The attacker is still active inside the Nexus Financial Microsoft 365 environment. Everything discovered in Room 2 (Detection and Analysis) was observation. This room is where the IR team transitions from understanding the incident to **actively resolving it**.
@@ -592,4 +590,3 @@ Near term
 
 ---
 
-*Writeup by [your GitHub handle] | TryHackMe Incident Response Module | Room 3 of 4*
