@@ -1,7 +1,6 @@
-# TryHackMe — Kaboom
+#  Kaboom
 **Category:** OT (Operational Technology)  
 **Difficulty:** Medium  
-**Points:** 60  
 **Attacker IP:** 10.49.98.125  
 **Target IP:** 10.49.176.165  
 
