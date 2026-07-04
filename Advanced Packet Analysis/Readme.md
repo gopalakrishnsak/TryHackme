@@ -355,7 +355,7 @@ Classic tunneling tells: long high-entropy subdomains, oversized TXT responses, 
 dns.qry.name matches "^[a-zA-Z0-9]{25,}\\."
 ```
 
-![DNS tunnel hunting filter results](images/14-dns-tunnel-hunting-filter.png)
+
 
 Every match was a 25+ character random-looking label glued onto the same parent domain, landing roughly every two seconds like clockwork — no legitimate app lookup pattern looks like that.
 
@@ -376,10 +376,10 @@ Long base64-looking TXT payloads coming back — that's the C2 channel's inbound
 ```
 icmp.type == 8 and frame.len > 100
 ```
-
+![DNS tunnel hunting filter results](images/14-dns-tunnel-hunting-filter.png)
 Standard ping payloads are tiny and predictable (64 bytes with the classic alphabet pattern on Linux, 32 static bytes on Windows). These packets were over 1000 bytes each.
 
-![ICMP packets well over normal ping size](images/15-icmp-tunnel-gzip-magic-bytes.png)
+
 
 Expanding the data field showed the first three bytes as `1f 8b 08` — the gzip magic number. No legitimate ping payload starts with a gzip header. Confirmed with TShark against the destination:
 
@@ -399,7 +399,7 @@ ubuntu@tryhackme:~/captures$ tshark -r investigation.pcap -Y "frame contains 53:
 Nov 14, 2025 03:30:00.030000000    198.51.100.20    10.14.22.88    443    55555
 Nov 14, 2025 03:30:00.050000000    10.14.22.88    198.51.100.20    55555    443
 ```
-
+![ICMP packets well over normal ping size](images/15-icmp-tunnel-gzip-magic-bytes.png)
 Two rows, one per direction of the banner exchange — server banner coming back on 443, client banner going out. That's a completed, functional SSH session tunneling over what perimeter rules almost certainly treat as "it's just HTTPS, let it through." Different destination IP (`198.51.100.20`) than the ICMP tunnel (`198.51.100.10`) too — operator split the covert channels across two hosts in the same /24, presumably to blunt a single-IP block from killing both channels at once.
 
 ### Automated IOC extraction
