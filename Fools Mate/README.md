@@ -1,7 +1,7 @@
-# TryHackMe — EndgameTrainer (Web / Client-Side Logic Bug)
+# Fools Mate (Web / Client-Side Logic Bug)
 
 **Category:** Web exploitation / client-side trust bug
-**Difficulty:** Easy–Medium
+**Difficulty:** Easy
 **Tools used:** Firefox DevTools (Inspector, Debugger, Network, Console)
 
 ## The setup
