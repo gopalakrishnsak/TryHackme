@@ -258,4 +258,4 @@ Two separate weaknesses were chained together here:
 
 ---
 
-*Writeup by me, for my own notes / portfolio after completing the TryHackMe room "Fools Mate, Revenge."*
+
