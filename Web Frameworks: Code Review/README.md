@@ -266,6 +266,14 @@ FLAG1 = THM{un10n_b4s3d_sql1_dump3d}
 
 ### FLAG2 — SSTI escalated to command execution
 
+
+
+First tried logging in via curl to get a reusable session cookie jar:
+```bash
+curl -s -c jar --data "username=analyst&password=vaultkeeper" "http://localhost:8080/login"
+```
+
+
 Same `/search` handler, same `q` parameter — but this time targeting the `render_template_string` sink instead of the SQL sink. First the smoke test, confirming Jinja2 is actually evaluating the input rather than echoing it as plain text:
 
 ```bash
